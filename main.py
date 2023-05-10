@@ -1,5 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
+import torchvision.models as models
 
 from NeuralNetwork import NeuralNetwork
 from SpaceshipDataset import SpaceshipDataset
@@ -19,10 +20,13 @@ model = NeuralNetwork()
 cross_entropy_loss = torch.nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-epochs = 5
+epochs = 15
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     train(train_dataloader, model, cross_entropy_loss, optimizer)
     test(test_dataloader, model, cross_entropy_loss)
 
 print("Done!")
+do_save = input("Would you like to save the model? y/N ->")
+if do_save == "y":
+    torch.save(model, "model.pth")
