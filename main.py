@@ -8,7 +8,14 @@ from utils import train, test
 training_data = SpaceshipDataset("Data/training.csv")
 test_data = SpaceshipDataset("Data/testing.csv")
 
-# print(training_data.features.columns)
+# test_data.features.write_csv("csv_test2.csv")
+# exit()
+# print(training_data.features)
+
+# with pl.Config(tbl_cols=29):
+#     print(training_data.features[1138])
+#
+# print(len(training_data.features.columns))
 # print(training_data.__getitem__(1138))
 # exit()
 
@@ -16,7 +23,6 @@ batch_size = 64
 
 train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True)
 test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
-
 
 model = NeuralNetwork()
 

@@ -5,7 +5,7 @@ class NeuralNetwork(nn.Module):
 	def __init__(self):
 		super().__init__()
 		self.stack = nn.Sequential(
-			nn.Linear(15, 1024),
+			nn.Linear(29, 1024),
 			nn.Sigmoid(),
 			nn.Linear(1024, 1024),
 			nn.Sigmoid(),
@@ -20,5 +20,7 @@ class NeuralNetwork(nn.Module):
 		)
 
 	def forward(self, x):
+		# if len(x[0][0]) < 29:
+		# 	print(list(x[0][0]))
 		logits = self.stack(x)
 		return logits
