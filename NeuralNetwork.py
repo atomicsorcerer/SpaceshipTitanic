@@ -7,6 +7,8 @@ class NeuralNetwork(nn.Module):
 		self.stack = nn.Sequential(
 			nn.Linear(15, 1024),
 			nn.Sigmoid(),
+			nn.Linear(1024, 1024),
+			nn.Sigmoid(),
 			nn.Linear(1024, 512),
 			nn.Sigmoid(),
 			nn.Linear(512, 256),

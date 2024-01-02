@@ -1,6 +1,5 @@
 import torch
 from torch.utils.data import DataLoader
-import torchvision.models as models
 
 from NeuralNetwork import NeuralNetwork
 from SpaceshipDataset import SpaceshipDataset
@@ -8,6 +7,10 @@ from utils import train, test
 
 training_data = SpaceshipDataset("Data/training.csv")
 test_data = SpaceshipDataset("Data/testing.csv")
+
+# print(training_data.features.columns)
+# print(training_data.__getitem__(1138))
+# exit()
 
 batch_size = 64
 
@@ -26,7 +29,8 @@ for t in range(epochs):
     train(train_dataloader, model, cross_entropy_loss, optimizer)
     test(test_dataloader, model, cross_entropy_loss)
 
-print("Done!")
-do_save = input("Would you like to save the model? y/N ->")
+print("Finished Training!\n")
+do_save = input("Would you like to save the model? y/N -> ")
 if do_save == "y":
     torch.save(model, "model.pth")
+    print("Model Saved")
