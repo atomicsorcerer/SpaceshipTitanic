@@ -29,11 +29,6 @@ def test(dataloader, model, loss_fn):
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
 
-            # s = sum(list(map(
-            #     lambda i: (i[0].index(max(i[0])) == i[1].index(max(i[1]))) + 0,
-            #     zip(y.numpy().tolist()[0], pred.numpy().tolist()[0])
-            # )))
-            # print(s)
             for i_y, i_pred in zip(list(y), list(pred)):
                 i_y = list(i_y[0].numpy())
                 i_pred = list(i_pred[0].numpy())
@@ -44,5 +39,5 @@ def test(dataloader, model, loss_fn):
     test_loss /= num_batches
 
     print(f"Test Error: Avg loss: {test_loss:>8f}")
-    print(f"Accuracy: {correct}/{size:>0.1f} \n")
+    print(f"Accuracy: {correct}/{size:>0.1f} = {correct/size * 100}% \n")
 #     \n Accuracy: {correct}/{size:>0.1f},

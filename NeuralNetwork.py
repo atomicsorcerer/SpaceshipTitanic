@@ -5,9 +5,11 @@ class NeuralNetwork(nn.Module):
 	def __init__(self):
 		super().__init__()
 		self.stack = nn.Sequential(
-			nn.Linear(29, 1024),
+			nn.Linear(29, 2048),
 			nn.Sigmoid(),
-			nn.Linear(1024, 1024),
+			nn.Linear(2048, 2048),
+			nn.Sigmoid(),
+			nn.Linear(2048, 1024),
 			nn.Sigmoid(),
 			nn.Linear(1024, 512),
 			nn.Sigmoid(),

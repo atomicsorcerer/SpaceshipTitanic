@@ -11,7 +11,7 @@ class SpaceshipDataset(Dataset):
 
 		# Import dataset and remove 'Transported' column (used for labels) and 'Name,' because it is not relevant
 		features_tmp = pl.read_csv(file_path).drop("Transported").drop("Name")
-		features_tmp = features_tmp.drop("PassengerId").with_columns(
+		features_tmp = (features_tmp.drop("PassengerId").with_columns(
 			features_tmp.get_column("PassengerId").apply(lambda s: int(s.split("_")[0])).alias("GroupId"),
 			features_tmp.get_column("PassengerId").apply(lambda s: int(s.split("_")[1])).alias("IntraGroupId"),
 			# One hot encode
@@ -25,7 +25,9 @@ class SpaceshipDataset(Dataset):
 			*features_tmp.get_column("Cabin").apply(lambda s: s.split("/")[2]).alias("RoomSide").to_dummies().get_columns(),
 			*features_tmp.get_column("CryoSleep").to_dummies().get_columns(),
 			*features_tmp.get_column("VIP").to_dummies().get_columns(),
-		).drop("Cabin").drop("Destination").drop("Destination_null").drop("HomePlanet").drop("HomePlanet_null").drop("RoomDeck_null").drop("RoomSide_null").drop("CryoSleep").drop("CryoSleep_null").drop("VIP").drop("VIP_null")
+		).drop("Cabin").drop("Destination").drop("Destination_null").drop("HomePlanet").drop("HomePlanet_null")
+						.drop("RoomDeck_null").drop("RoomSide_null").drop("CryoSleep").drop("CryoSleep_null")
+						.drop("VIP").drop("VIP_null"))
 
 		# Fill any remaining null values with 0
 		features_tmp = features_tmp.fill_null(strategy="zero")

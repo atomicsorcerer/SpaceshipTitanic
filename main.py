@@ -1,23 +1,14 @@
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 
 from NeuralNetwork import NeuralNetwork
 from SpaceshipDataset import SpaceshipDataset
 from utils import train, test
 
-training_data = SpaceshipDataset("Data/training.csv")
-test_data = SpaceshipDataset("Data/testing.csv")
+data = SpaceshipDataset("Data/train.csv")
 
-# test_data.features.write_csv("csv_test2.csv")
-# exit()
-# print(training_data.features)
-
-# with pl.Config(tbl_cols=29):
-#     print(training_data.features[1138])
-#
-# print(len(training_data.features.columns))
-# print(training_data.__getitem__(1138))
-# exit()
+test_percent = 0.05
+training_data, test_data = random_split(data, [1-test_percent, test_percent])
 
 batch_size = 64
 
@@ -26,14 +17,14 @@ test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
 
 model = NeuralNetwork()
 
-cross_entropy_loss = torch.nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+loss_function = torch.nn.BCELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
 
-epochs = 15
+epochs = 20
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
-    train(train_dataloader, model, cross_entropy_loss, optimizer)
-    test(test_dataloader, model, cross_entropy_loss)
+    train(train_dataloader, model, loss_function, optimizer)
+    test(test_dataloader, model, loss_function)
 
 print("Finished Training!\n")
 do_save = input("Would you like to save the model? y/N -> ")
