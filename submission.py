@@ -1,7 +1,6 @@
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-
 import polars as pl
 
 from SpaceshipDataset import SubmissionDataset
@@ -20,9 +19,9 @@ predictions_set = []
 
 for X in submission_dataloader:
 	pred = model(X)
-	pred = pred.detach().numpy()[0][0]
-	pred = np.where(pred == max(pred))[0][0]
-	pred = "True" if pred == 0 else "False"
+	pred = pred.detach().numpy()[0][0][0]
+	pred = np.round(pred)
+	pred = "True" if pred == 1 else "False"
 
 	predictions_set.append(pred)
 

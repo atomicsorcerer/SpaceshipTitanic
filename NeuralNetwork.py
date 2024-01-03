@@ -17,12 +17,10 @@ class NeuralNetwork(nn.Module):
 			nn.Sigmoid(),
 			nn.Linear(256, 256),
 			nn.Sigmoid(),
-			nn.Linear(256, 2),
-			nn.Softmax(dim=2)
+			nn.Linear(256, 1),
+			nn.Sigmoid()
 		)
 
 	def forward(self, x):
-		# if len(x[0][0]) < 29:
-		# 	print(list(x[0][0]))
 		logits = self.stack(x)
 		return logits

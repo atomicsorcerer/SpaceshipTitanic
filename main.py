@@ -7,7 +7,7 @@ from utils import train, test
 
 data = SpaceshipDataset("Data/train.csv")
 
-test_percent = 0.05
+test_percent = 0.02
 training_data, test_data = random_split(data, [1-test_percent, test_percent])
 
 batch_size = 64
@@ -20,7 +20,7 @@ model = NeuralNetwork()
 loss_function = torch.nn.BCELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
 
-epochs = 20
+epochs = 15
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     train(train_dataloader, model, loss_function, optimizer)

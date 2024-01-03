@@ -7,7 +7,7 @@ import polars as pl
 class SpaceshipDataset(Dataset):
 	def __init__(self, file_path, transform=None, target_transform=None):
 		# Set labels based on if the passenger was transported
-		self.labels = pl.read_csv(file_path).get_column("Transported").apply(lambda s: [1, 0] if s else [0, 1])
+		self.labels = pl.read_csv(file_path).get_column("Transported").apply(lambda s: [1.0] if s else [0.0])
 
 		# Import dataset and remove 'Transported' column (used for labels) and 'Name,' because it is not relevant
 		features_tmp = pl.read_csv(file_path).drop("Transported").drop("Name")
@@ -38,7 +38,6 @@ class SpaceshipDataset(Dataset):
 		return len(self.labels)
 
 	def __getitem__(self, idx):
-		# Label: [TRUE, FALSE]: [1, 0]
 		label = torch.tensor([self.labels[idx]], dtype=torch.float32)
 		feature = torch.from_numpy(np.float32(self.features[idx].to_numpy()))
 
